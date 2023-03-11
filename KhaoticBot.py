@@ -204,11 +204,11 @@ async def respawnLoop(vc, ctx):
                 if timersecond < 0:
                     timersecond = timersecond + 60
                 if timersecond == 30 and is_playing(ctx) == False:
-                    vc.play(discord.FFmpegPCMAudio(executable="C:/Program Files/ShareX/ffmpeg.exe", source="sounds/respawntimer.mp3"))
+                    vc.play(discord.FFmpegPCMAudio(executable="C:/Program Files/ShareX/ffmpeg.exe", source="respawntimer.mp3"))
                 elif timersecond == 20 and is_playing(ctx) == False:
-                    vc.play(discord.FFmpegPCMAudio(executable="C:/Program Files/ShareX/ffmpeg.exe", source="sounds/respawntimer20seconds.mp3"))
+                    vc.play(discord.FFmpegPCMAudio(executable="C:/Program Files/ShareX/ffmpeg.exe", source="respawntimer20seconds.mp3"))
                 elif timersecond == 10 and is_playing(ctx) == False:
-                    vc.play(discord.FFmpegPCMAudio(executable="C:/Program Files/ShareX/ffmpeg.exe", source="sounds/respawntimer10seconds.mp3"))
+                    vc.play(discord.FFmpegPCMAudio(executable="C:/Program Files/ShareX/ffmpeg.exe", source="respawntimer10seconds.mp3"))
 
 def is_playing(ctx):
     if ctx.voice_client.is_playing():
