@@ -11,6 +11,7 @@ async def on_ready():
     if os.path.exists("settings.xlsx") == False:
         workbook = Workbook()
         workbook.save(filename="settings.xlsx")
+    await bot.change_presence(activity=discord.Game(name="Khaotic Soulz's bot."))
     print(f"Logged in as {bot.user}")
 
 @bot.slash_command(description="Blacklists mentioned user from using the bot.")
@@ -52,7 +53,21 @@ async def giveadmin(ctx, user: discord.Member):
         await ctx.respond(str(user) + " is now an admin.")
     else:
         await ctx.respond("Only admins can perform this command.", ephemeral = True)
-
+       
+@bot.slash_command(description="Changes bot's status.")
+async def status(ctx, status):
+    workbook = load_workbook(filename="settings.xlsx")
+    sheet = workbook.active
+    admins = []
+    if int(sheet.cell(row=1, column=2).value) != 1:
+        for x in range(2, int(sheet.cell(row=1, column=2).value)+1):
+            admins.append(int(sheet.cell(row=x, column=2).value))
+    if ctx.author.id in admins:
+        await bot.change_presence(activity=discord.Game(name=status))
+        await ctx.respond("Bot status changed.", ephemeral = True)
+    else:
+        await ctx.respond("Only admins can perform this command.", ephemeral = True)
+        
 @bot.slash_command(description="Removes the mentioned user from the admin list.")
 async def removeadmin(ctx, user: discord.Member):
     workbook = load_workbook(filename="settings.xlsx")
