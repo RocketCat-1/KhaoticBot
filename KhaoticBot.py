@@ -197,30 +197,32 @@ async def crafters(ctx):
         for role in member.roles:
             roles = 0
             if role.id == 1074886454620209202: #Weaponsmithing
-                weapon.append(member.name)
+                if member.id == 471063084316884992:
+                    pass
+                weapon.append(member.display_name)
                 roles = roles + 1
             if role.id == 1074886497439846491: #Armoring
-                armor.append(member.name)
+                armor.append(member.display_name)
                 roles = roles + 1
             if role.id == 1074886525235507240: #Enginering 
-                enginer.append(member.name)
+                enginer.append(member.display_name)
                 roles = roles + 1
             if role.id == 1074886552720777226: #Jewel
-                jewel.append(member.name)
+                jewel.append(member.display_name)
                 roles = roles + 1
             if role.id == 1074886597914398780: #Arcana
-                arcana.append(member.name)
+                arcana.append(member.display_name)
                 roles = roles + 1
             if role.id == 1074886623029891124: #Cooking
-                cooking.append(member.name)
+                cooking.append(member.display_name)
                 roles = roles + 1
             if role.id == 1074886647054872677: #Furnishing 
-                furnishing.append(member.name)
+                furnishing.append(member.display_name)
                 roles = roles + 1
-            if roles == 7:
-                masters.append(member.name)
-    embedVar = discord.Embed(title="Master Crafter List", description="**Masters:**\n" + ', '.join(masters) + "\n\n**Arcana**:" + ', '.join(arcana) + "\n\n**Armoring**:" + ', '.join(armor) + "\n\n**Cooking**:" + ', '.join(cooking) + "\n\n**Engineering**:" + ', '.join(enginer) + "\n\n**Furnishing**:" + ', '.join(furnishing) + "\n\n**Jewelcrafting**:" + ', '.join(jewel) + "\n\n**Weaponsmithing**:" + ', '.join(weapon), color=0x00ff00)
-    await ctx.respond(embed = embedVar, ephemeral = True)
+        if member.display_name in weapon and member.display_name in armor and member.display_name in enginer and member.display_name in jewel and member.display_name in arcana and member.display_name in cooking and member.display_name in furnishing:
+            masters.append(member.display_name)
+    embedVar = discord.Embed(title="Master Crafter List", description="**Masters: **\n" + ', '.join(masters) + "\n\n**Arcana: **" + ', '.join(arcana) + "\n\n**Armoring: **" + ', '.join(armor) + "\n\n**Cooking: **" + ', '.join(cooking) + "\n\n**Engineering: **" + ', '.join(enginer) + "\n\n**Furnishing: **" + ', '.join(furnishing) + "\n\n**Jewelcrafting: **" + ', '.join(jewel) + "\n\n**Weaponsmithing: **" + ', '.join(weapon), color=0x8c0303)
+    await ctx.respond(embed = embedVar)
 
 @tasks.loop(seconds=0.5)
 async def respawnLoop(vc, ctx):
