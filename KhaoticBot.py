@@ -53,7 +53,7 @@ async def giveadmin(ctx, user: discord.Member):
         await ctx.respond(str(user) + " is now an admin.")
     else:
         await ctx.respond("Only admins can perform this command.", ephemeral = True)
-       
+
 @bot.slash_command(description="Changes bot's status.")
 async def status(ctx, status):
     workbook = load_workbook(filename="settings.xlsx")
@@ -67,7 +67,8 @@ async def status(ctx, status):
         await ctx.respond("Bot status changed.", ephemeral = True)
     else:
         await ctx.respond("Only admins can perform this command.", ephemeral = True)
-        
+
+
 @bot.slash_command(description="Removes the mentioned user from the admin list.")
 async def removeadmin(ctx, user: discord.Member):
     workbook = load_workbook(filename="settings.xlsx")
@@ -182,6 +183,45 @@ async def help(ctx):
     else:
         await ctx.respond("Currently all commands are admin commands, please check back in future updates or DM <@259726664236269568> for more info.", ephemeral = True)
 
+@bot.slash_command(description="Gives a list of who has crafting skills at 200.")
+async def crafters(ctx):
+    weapon = []
+    armor = []
+    enginer = []
+    jewel = []
+    arcana = []
+    cooking = []
+    furnishing = []
+    masters = []
+    for member in ctx.guild.members:
+        for role in member.roles:
+            roles = 0
+            if role.id == 1074886454620209202: #Weaponsmithing
+                weapon.append(member.name)
+                roles = roles + 1
+            if role.id == 1074886497439846491: #Armoring
+                armor.append(member.name)
+                roles = roles + 1
+            if role.id == 1074886525235507240: #Enginering 
+                enginer.append(member.name)
+                roles = roles + 1
+            if role.id == 1074886552720777226: #Jewel
+                jewel.append(member.name)
+                roles = roles + 1
+            if role.id == 1074886597914398780: #Arcana
+                arcana.append(member.name)
+                roles = roles + 1
+            if role.id == 1074886623029891124: #Cooking
+                cooking.append(member.name)
+                roles = roles + 1
+            if role.id == 1074886647054872677: #Furnishing 
+                furnishing.append(member.name)
+                roles = roles + 1
+            if roles == 7:
+                masters.append(member.name)
+    embedVar = discord.Embed(title="Master Crafter List", description="**Masters:**\n" + ', '.join(masters) + "\n\n**Arcana**:" + ', '.join(arcana) + "\n\n**Armoring**:" + ', '.join(armor) + "\n\n**Cooking**:" + ', '.join(cooking) + "\n\n**Engineering**:" + ', '.join(enginer) + "\n\n**Furnishing**:" + ', '.join(furnishing) + "\n\n**Jewelcrafting**:" + ', '.join(jewel) + "\n\n**Weaponsmithing**:" + ', '.join(weapon), color=0x00ff00)
+    await ctx.respond(embed = embedVar, ephemeral = True)
+
 @tasks.loop(seconds=0.5)
 async def respawnLoop(vc, ctx):
     if ctx.guild.voice_client not in bot.voice_clients:
@@ -205,9 +245,6 @@ async def respawnLoop(vc, ctx):
         if time < int(times[x]) or found == 1:
             pass
         elif time >= int(times[x]):
-            if times[x] == '0052':
-                respawnLoop.stop()
-                return
             found = 1
             timestime = times[x]
             timeminute = timestime[0] + timestime[1]
@@ -231,4 +268,4 @@ def is_playing(ctx):
     else:
         return False
     
-bot.run("botID")
+bot.run("bot token")
